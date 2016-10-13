@@ -1,8 +1,9 @@
 CC = gcc
 CFLAGS = -std=gnu99 -Wall -g -pthread
-OBJS = list.o threadpool.o main.o merge_sort.o
+OBJS = main.o list.o threadpool.o merge_sort.o utils.o
 
 THREAD_NUM ?= $(shell nproc)
+PROFILE ?= 0
 
 .PHONY: all clean test
 
@@ -16,14 +17,14 @@ $(GIT_HOOKS):
 
 deps := $(OBJS:%.o=.%.o.d)
 %.o: %.c
-	$(CC) $(CFLAGS) -o $@ -MMD -MF .$@.d -c $<
+	$(CC) $(CFLAGS) -DPROFILE=$(PROFILE) -o $@ -MMD -MF .$@.d -c $<
 
 sort: $(OBJS)
 	$(CC) $(CFLAGS) -o $@ $(OBJS) -rdynamic
 
 check: all
 	sort -R dictionary/words.txt | ./sort $(THREAD_NUM) $(shell wc -l dictionary/words.txt) > sorted.txt
-	diff -u dictionary/words.txt sorted.txt && echo "Verified!" || echo "Failed!"
+	@diff -u dictionary/words.txt sorted.txt && echo "Verified!" || echo "Failed!"
 
 clean:
 	rm -f $(OBJS) sort

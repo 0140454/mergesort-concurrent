@@ -4,6 +4,7 @@
 
 #include "threadpool.h"
 #include "merge_sort.h"
+#include "utils.h"
 #include "list.h"
 
 #define USAGE "usage: ./sort [thread_count] [input_count]\n"
@@ -109,6 +110,11 @@ int main(int argc, char const *argv[])
         list_add(the_list, data);
     }
 
+#if PROFILE
+    struct timespec start, end;
+
+    clock_gettime(CLOCK_REALTIME, &start);
+#endif
     /* initialize tasks inside thread pool */
     pthread_mutex_init(&(data_context.mutex), NULL);
     tmp_list = NULL;
@@ -123,5 +129,9 @@ int main(int argc, char const *argv[])
 
     /* release thread pool */
     tpool_free(pool);
+#if PROFILE
+    clock_gettime(CLOCK_REALTIME, &end);
+    fprintf(stderr, "execution time: %lf sec\n", diff_in_second(start, end));
+#endif
     return 0;
 }
