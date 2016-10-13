@@ -6,4 +6,6 @@
 *.list
 *.swp
 *.bak
+.tags
 sort
+sorted.txt
