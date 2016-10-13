@@ -8,7 +8,7 @@
 typedef struct _task {
     void (*func)(void *);
     void *arg;
-    struct _task *next, *last;
+    struct _task *next;
 } task_t;
 
 int task_free(task_t *the_task);
