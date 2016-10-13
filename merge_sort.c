@@ -1,6 +1,7 @@
 #include "merge_sort.h"
 
 #include <stdlib.h>
+#include <string.h>
 
 llist_t *merge_list(llist_t *a, llist_t *b)
 {
@@ -8,8 +9,8 @@ llist_t *merge_list(llist_t *a, llist_t *b)
     node_t *current = NULL;
     while (a->size && b->size) {
         llist_t *small = (llist_t *)
-                         ((intptr_t) a * (a->head->data <= b->head->data) +
-                          (intptr_t) b * (a->head->data > b->head->data));
+                         ((intptr_t) a * (memcmp(a->head->data, b->head->data, sizeof(val_t)) <= 0) +
+                          (intptr_t) b * (memcmp(a->head->data, b->head->data, sizeof(val_t)) > 0));
         if (current) {
             current->next = small->head;
             current = current->next;
