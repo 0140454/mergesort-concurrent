@@ -12,7 +12,6 @@ int tqueue_init(tqueue_t *the_queue)
     the_queue->head = NULL;
     the_queue->tail = NULL;
     pthread_mutex_init(&(the_queue->mutex), NULL);
-    pthread_cond_init(&(the_queue->cond), NULL);
     the_queue->size = 0;
     return 0;
 }

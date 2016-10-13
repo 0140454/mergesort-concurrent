@@ -16,7 +16,6 @@ int task_free(task_t *the_task);
 typedef struct {
     task_t *head, *tail;
     pthread_mutex_t mutex;
-    pthread_cond_t cond;
     uint32_t size;
 } tqueue_t;
 
