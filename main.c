@@ -83,6 +83,7 @@ void merge(void *data)
         the_list = _list;
         task_t *_task = (task_t *) malloc(sizeof(task_t));
         _task->func = NULL;
+        _task->arg = NULL;
         tqueue_push(pool->queue, _task);
         list_print(_list);
     }

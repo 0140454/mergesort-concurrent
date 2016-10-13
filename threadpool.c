@@ -59,7 +59,7 @@ int tqueue_free(tqueue_t *the_queue)
     task_t *cur = the_queue->head;
     while (cur) {
         the_queue->head = the_queue->head->next;
-        free(cur);
+        task_free(cur);
         cur = the_queue->head;
     }
     pthread_mutex_destroy(&(the_queue->mutex));
