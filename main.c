@@ -18,7 +18,7 @@ static llist_t *the_list = NULL;
 static int thread_count = 0, data_count = 0;
 static tpool_t *pool = NULL;
 
-void merge(void *data)
+void merge_threads_list(void *data)
 {
     llist_t *_list = (llist_t *) data;
     if (_list->size < (uint32_t) data_count) {
@@ -31,7 +31,7 @@ void merge(void *data)
             tmp_list = NULL;
             pthread_mutex_unlock(&(data_context.mutex));
             task_t *_task = (task_t *) malloc(sizeof(task_t));
-            _task->func = merge;
+            _task->func = merge_threads_list;
             _task->arg = merge_list(_list, _t);
             tqueue_push(pool->queue, _task);
         }
@@ -69,7 +69,7 @@ void cut_func(void *data)
         _task->arg = list;
         tqueue_push(pool->queue, _task);
     } else {
-        merge(list);
+        merge_threads_list(list);
     }
 }
 
