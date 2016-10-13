@@ -47,20 +47,6 @@ llist_t *merge_list(llist_t *a, llist_t *b)
     return _list;
 }
 
-llist_t *merge_sort(llist_t *list)
-{
-    if (list->size < 2)
-        return list;
-    int mid = list->size / 2;
-    llist_t *left = list;
-    llist_t *right = list_new();
-    right->head = list_get(list, mid);
-    right->size = list->size - mid;
-    list_get(list, mid - 1)->next = NULL;
-    left->size = mid;
-    return merge_list(merge_sort(left), merge_sort(right));
-}
-
 void merge(void *data)
 {
     llist_t *_list = (llist_t *) data;
@@ -112,7 +98,7 @@ void cut_func(void *data)
         _task->arg = list;
         tqueue_push(pool->queue, _task);
     } else {
-        merge(merge_sort(list));
+        merge(list);
     }
 }
 
