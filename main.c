@@ -57,13 +57,13 @@ void cut_func(void *data)
         list_get(list, mid - 1)->next = NULL;
         list->size = mid;
 
-        /* create new task: left */
+        /* create new task: right */
         task_t *_task = (task_t *) malloc(sizeof(task_t));
         _task->func = cut_func;
         _task->arg = _list;
         tqueue_push(pool->queue, _task);
 
-        /* create new task: right */
+        /* create new task: left */
         _task = (task_t *) malloc(sizeof(task_t));
         _task->func = cut_func;
         _task->arg = list;
