@@ -25,13 +25,13 @@ llist_t *list_new()
  * list_add inserts a new node with the given value val in the list
  * (if the value was absent) or does nothing (if the value is already present).
  */
-int list_add(llist_t *list, val_t val)
+llist_t *list_add(llist_t *list, val_t val)
 {
     node_t *e = node_new(val, NULL);
     e->next = list->head;
     list->head = e;
     list->size++;
-    return 0;
+    return list;
 }
 
 /*
